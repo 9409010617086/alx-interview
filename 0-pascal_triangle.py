@@ -1,30 +1,25 @@
 #!/usr/bin/python3
-"""Pascal's triangle interview challenge"""
-
-
-def fact(n):
-    """return the factorial of an integer to help
-    us get the coefficients"""
-    if n == 0:
-        return 1
-    return n * fact(n - 1)
+"""
+given an integer, the function in this module creates
+an array of array representing a pascal triangle levels = the integer
+"""
 
 
 def pascal_triangle(n):
-    """returns a list of lists representing
-    pascal's triangle"""
+    """ creates a pascal triangle of size n """
+    lst = []
     if n <= 0:
-        return ['']
+        return lst
 
-    def pascal(n):
-        """returns a list of a row"""
-        c = 1
-        row = []
-        for j in range(0, n+1):
-            # getting and appending the coeffients to the row
-            c = fact(n) // ((fact(n - j) * fact(j)))
-            row.append(c)
+    for i in range(n):
+        child = [1]
+        for j in range(i):
+            res = 0
+            j = j + 1
+            res = lst[i - 1][j - 1]
+            if j < i:
+                res += lst[i - 1][j]
+            child.append(res)
+        lst.append(child)
 
-        return row
-
-    return [pascal(row) for row in range(n)]
+    return lst
